@@ -1,4 +1,4 @@
-"""Central configuration for the RAC project."""
+"""Central configuration for the RAG project."""
 from __future__ import annotations
 
 import os

@@ -60,7 +60,7 @@ The dashboard ships three tabs:
 ## Project layout
 
 ```
-RAC-Proj/
+RAG-Proj/
 ├── data/
 │   └── ssa_faqs.json        # FAQ corpus (seed + scraped)
 ├── index/                   # FAISS indices + metadata (generated)
