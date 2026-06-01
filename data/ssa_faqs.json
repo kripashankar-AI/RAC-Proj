@@ -1,0 +1,92 @@
+[
+  {
+    "question": "How do I apply for Social Security retirement benefits?",
+    "answer": "You can apply for Social Security retirement benefits online at ssa.gov/retirement, by phone at 1-800-772-1213 (TTY 1-800-325-0778), or in person at your local Social Security office. The online application is the fastest option and you can save your progress and return to it later. You can apply up to four months before you want benefits to begin.",
+    "url": "https://www.ssa.gov/benefits/retirement/apply.html",
+    "category": "Retirement"
+  },
+  {
+    "question": "What is my full retirement age?",
+    "answer": "Your full retirement age (FRA) depends on the year you were born. For people born in 1960 or later, full retirement age is 67. For those born from 1943 through 1954, FRA is 66. Between 1955 and 1959, FRA gradually increases by two months per birth year. You can claim reduced benefits as early as age 62 or earn delayed retirement credits by waiting until as late as age 70.",
+    "url": "https://www.ssa.gov/benefits/retirement/planner/agereduction.html",
+    "category": "Retirement"
+  },
+  {
+    "question": "How do I replace a lost or stolen Social Security card?",
+    "answer": "In many states you can request a free replacement Social Security card online through your personal my Social Security account at ssa.gov/myaccount, as long as you are a U.S. citizen age 18 or older with a U.S. mailing address and a state-issued ID from a participating state. Otherwise, complete Form SS-5 and mail or bring it to your local Social Security office with original proof of identity. You are limited to three replacement cards per year and ten in a lifetime, with some exceptions.",
+    "url": "https://www.ssa.gov/number-card/replace-card",
+    "category": "Social Security Number and Card"
+  },
+  {
+    "question": "How do I get a copy of my Social Security Statement?",
+    "answer": "The fastest way is to sign in to your personal my Social Security account at ssa.gov/myaccount and view or download your Statement online. The Statement shows your earnings history and estimates of your future retirement, disability, and survivor benefits. Workers who do not have an online account and are not yet receiving benefits are mailed a paper Statement once a year starting at age 60.",
+    "url": "https://www.ssa.gov/myaccount/statement.html",
+    "category": "my Social Security"
+  },
+  {
+    "question": "How do I apply for Social Security disability benefits?",
+    "answer": "You can apply for Social Security Disability Insurance (SSDI) online at ssa.gov/disability, by phone at 1-800-772-1213, or in person. You will need medical records, work history, and information about your condition. SSA decides whether your medical condition meets its definition of disability, which generally requires a severe impairment expected to last at least 12 months or result in death. Initial decisions can take several months.",
+    "url": "https://www.ssa.gov/benefits/disability/apply.html",
+    "category": "Disability"
+  },
+  {
+    "question": "What is the difference between SSDI and SSI?",
+    "answer": "Social Security Disability Insurance (SSDI) pays benefits to people who have worked long enough and paid Social Security taxes, and who now have a qualifying disability. Supplemental Security Income (SSI) is a needs-based program that pays benefits to people who are 65 or older, blind, or disabled and who have limited income and resources, regardless of work history. Some people qualify for both programs at the same time.",
+    "url": "https://www.ssa.gov/ssi/",
+    "category": "Disability"
+  },
+  {
+    "question": "How are Social Security benefits calculated?",
+    "answer": "SSA calculates your retirement benefit using your highest 35 years of indexed earnings. Those earnings are averaged into your Average Indexed Monthly Earnings (AIME), and a formula with bend points is applied to the AIME to produce your Primary Insurance Amount (PIA), which is the benefit payable at full retirement age. Claiming earlier reduces the benefit and claiming later (up to age 70) increases it through delayed retirement credits.",
+    "url": "https://www.ssa.gov/benefits/retirement/planner/anyPiaWepjs04.html",
+    "category": "Retirement"
+  },
+  {
+    "question": "Can I work while receiving Social Security retirement benefits?",
+    "answer": "Yes. If you have reached full retirement age, you can earn any amount without your benefits being reduced. If you are under full retirement age for the entire year, SSA deducts $1 from your benefits for every $2 you earn above an annual earnings limit. In the year you reach full retirement age, a higher limit applies and SSA deducts $1 for every $3 above the limit until the month you reach FRA. After FRA, no earnings test applies.",
+    "url": "https://www.ssa.gov/benefits/retirement/planner/whileworking.html",
+    "category": "Retirement"
+  },
+  {
+    "question": "How do I apply for Medicare?",
+    "answer": "Most people become eligible for Medicare at age 65. If you are already receiving Social Security benefits, you are automatically enrolled in Medicare Part A and Part B starting the month you turn 65. If you are not yet receiving benefits, you should apply through Social Security at ssa.gov/medicare during your seven-month Initial Enrollment Period, which begins three months before the month you turn 65.",
+    "url": "https://www.ssa.gov/medicare/sign-up",
+    "category": "Medicare"
+  },
+  {
+    "question": "How do survivors' benefits work?",
+    "answer": "When a worker who has earned enough Social Security credits dies, certain family members may be eligible for survivors' benefits. These can include a widow or widower (as early as age 60, or 50 if disabled), unmarried children under 18 (or up to 19 if still in high school), and dependent parents age 62 or older. A one-time lump-sum death payment of $255 may also be available to an eligible spouse or child. Apply by phone or at a local Social Security office.",
+    "url": "https://www.ssa.gov/benefits/survivors/",
+    "category": "Survivors"
+  },
+  {
+    "question": "How do I change my address or direct deposit information?",
+    "answer": "If you receive Social Security or SSI benefits, the easiest way to update your address, phone number, or direct deposit information is to sign in to your personal my Social Security account at ssa.gov/myaccount. You can also call 1-800-772-1213 or visit your local Social Security office. Keeping your information current ensures you receive notices and payments without interruption.",
+    "url": "https://www.ssa.gov/myaccount/",
+    "category": "my Social Security"
+  },
+  {
+    "question": "What should I do if I think someone is using my Social Security number?",
+    "answer": "If you suspect someone is using your Social Security number, file a report at IdentityTheft.gov, place a fraud alert or credit freeze with the three major credit bureaus, and review your Social Security Statement for unfamiliar earnings. You should also report Social Security-related scams to the SSA Office of the Inspector General at oig.ssa.gov. SSA generally will not issue a new Social Security number except in limited cases of ongoing harm.",
+    "url": "https://www.ssa.gov/scam/",
+    "category": "Fraud and Scams"
+  },
+  {
+    "question": "How do I get a Social Security number for a newborn?",
+    "answer": "The easiest way is to apply when you provide information for your baby's birth certificate at the hospital. The state agency will share the information with SSA, and the card is mailed to you. If you wait, you must complete Form SS-5 and provide original documents proving the child's U.S. citizenship, age, and identity, plus proof of your own identity, at a Social Security office.",
+    "url": "https://www.ssa.gov/number-card/request-number-first-time",
+    "category": "Social Security Number and Card"
+  },
+  {
+    "question": "Are Social Security benefits taxable?",
+    "answer": "Some people who receive Social Security benefits have to pay federal income tax on a portion of them. Whether your benefits are taxed depends on your combined income, which is your adjusted gross income plus nontaxable interest plus half of your Social Security benefits. Up to 50% of benefits may be taxable above the first threshold, and up to 85% above a higher threshold. Filing status affects the thresholds. See IRS Publication 915 for details.",
+    "url": "https://www.ssa.gov/benefits/retirement/planner/taxes.html",
+    "category": "Taxes"
+  },
+  {
+    "question": "How do I create a my Social Security account?",
+    "answer": "Go to ssa.gov/myaccount and select Create an Account. You will sign in or sign up through Login.gov or ID.me, which verify your identity. You must be at least 18 years old, have a valid email address, a Social Security number, and a U.S. mailing address. Once your account is set up, you can view your Statement, estimate benefits, request a replacement card in many states, and manage benefits if you receive them.",
+    "url": "https://www.ssa.gov/myaccount/create.html",
+    "category": "my Social Security"
+  }
+]
