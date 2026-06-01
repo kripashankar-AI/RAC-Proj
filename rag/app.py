@@ -1,15 +1,17 @@
-"""Gradio dashboard for the SSA FAQ chatbot.
+"""Gradio dashboard for the SSA FAQ RAG chatbot.
 
-Two menu tabs:
-  - RAC               : retrieval-augmented chatbot
-  - Analyser Visuals  : upload an image + question, get an answer about it
+Three menu tabs:
+  - RAG                 : retrieval-augmented chatbot (model v1: MiniLM)
+  - New RAG new model   : same chatbot using a different embedding model (v2: MPNet)
+  - Analyser Visuals    : upload an image + question, get an answer about it
 """
 from __future__ import annotations
 
 import gradio as gr
 
-from rac import retriever
-from rac import vision
+from rag import config
+from rag import retriever
+from rag import vision
 
 
 CSS = """
@@ -17,8 +19,6 @@ CSS = """
 #title { text-align: center; }
 """
 
-
-# ---------- RAC tab ----------------------------------------------------------
 
 def _format_sources(sources: list[dict]) -> str:
     if not sources:
@@ -35,37 +35,47 @@ def _format_sources(sources: list[dict]) -> str:
     return "\n".join(lines)
 
 
-def chat_fn(message: str, history: list[tuple[str, str]]) -> str:
-    result = retriever.answer(message)
-    body = result["answer"]
-    sources = _format_sources(result.get("sources", []))
-    return f"{body}\n\n{sources}" if sources else body
+def _make_chat_fn(version: str):
+    def chat_fn(message: str, history: list[tuple[str, str]]) -> str:
+        result = retriever.answer(message, version=version)
+        body = result["answer"]
+        sources = _format_sources(result.get("sources", []))
+        return f"{body}\n\n{sources}" if sources else body
+
+    return chat_fn
 
 
-# ---------- UI ---------------------------------------------------------------
+EXAMPLES = [
+    "How do I apply for Social Security retirement benefits?",
+    "What is my full retirement age?",
+    "How do I replace a lost Social Security card?",
+    "What's the difference between SSDI and SSI?",
+    "Are Social Security benefits taxable?",
+]
+
 
 def build_ui() -> gr.Blocks:
-    with gr.Blocks(title="RAC — SSA FAQ Dashboard") as demo:
+    with gr.Blocks(title="RAG — SSA FAQ Dashboard") as demo:
         gr.Markdown(
-            "# RAC — SSA FAQ Dashboard\n"
-            "Retrieval-Augmented Chatbot trained on Social Security Administration FAQs. "
-            "**Demo only — not official SSA guidance.** Verify at "
-            "[ssa.gov](https://www.ssa.gov).",
+            "# RAG — SSA FAQ Dashboard\n"
+            "Retrieval-Augmented Generation chatbot trained on Social Security "
+            "Administration FAQs. **Demo only — not official SSA guidance.** "
+            "Verify at [ssa.gov](https://www.ssa.gov).",
             elem_id="title",
         )
 
         with gr.Tabs():
-            with gr.Tab("RAC"):
-                gr.ChatInterface(
-                    fn=chat_fn,
-                    examples=[
-                        "How do I apply for Social Security retirement benefits?",
-                        "What is my full retirement age?",
-                        "How do I replace a lost Social Security card?",
-                        "What's the difference between SSDI and SSI?",
-                        "Are Social Security benefits taxable?",
-                    ],
+            with gr.Tab("RAG"):
+                gr.Markdown(f"_Model:_ `{config.EMBEDDING_MODEL}`")
+                gr.ChatInterface(fn=_make_chat_fn("v1"), examples=EXAMPLES)
+
+            with gr.Tab("New RAG new model"):
+                gr.Markdown(
+                    f"_Model:_ `{config.EMBEDDING_MODEL_V2}` — a larger, "
+                    "higher-quality sentence encoder. Build its index once "
+                    "with `python -m rag.ingest --version v2`."
                 )
+                gr.ChatInterface(fn=_make_chat_fn("v2"), examples=EXAMPLES)
 
             with gr.Tab("Analyser Visuals"):
                 gr.Markdown(
@@ -77,11 +87,7 @@ def build_ui() -> gr.Blocks:
                 )
                 with gr.Row():
                     with gr.Column(scale=1):
-                        image_in = gr.Image(
-                            label="Visual",
-                            type="filepath",
-                            height=360,
-                        )
+                        image_in = gr.Image(label="Visual", type="filepath", height=360)
                         vquestion_in = gr.Textbox(
                             label="Question",
                             placeholder="e.g. Which category has the most FAQs?",

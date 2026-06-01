@@ -12,7 +12,7 @@ from pathlib import Path
 
 from PIL import Image
 
-from rac import config
+from rag import config
 
 
 # ---------- helpers ----------------------------------------------------------

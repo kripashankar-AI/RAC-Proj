@@ -1,14 +1,18 @@
-"""Retrieval-augmented question answering over the SSA FAQ corpus."""
+"""Retrieval-augmented question answering over the SSA FAQ corpus.
+
+Supports two embedding models (``v1`` = MiniLM, ``v2`` = MPNet) selected via
+the ``version`` argument.
+"""
 from __future__ import annotations
 
 import json
 from dataclasses import dataclass
+from pathlib import Path
 
 import faiss
-import numpy as np
 from sentence_transformers import SentenceTransformer
 
-from rac import config
+from rag import config
 
 
 @dataclass
@@ -20,16 +24,32 @@ class RetrievedFAQ:
     score: float
 
 
+def _paths_for(version: str) -> tuple[Path, Path, str]:
+    if version == "v1":
+        return config.FAISS_INDEX_PATH, config.META_PATH, config.EMBEDDING_MODEL
+    if version == "v2":
+        return (
+            config.FAISS_INDEX_V2_PATH,
+            config.META_V2_PATH,
+            config.EMBEDDING_MODEL_V2,
+        )
+    raise ValueError(f"Unknown version: {version}")
+
+
 class Retriever:
-    def __init__(self) -> None:
-        if not config.FAISS_INDEX_PATH.exists() or not config.META_PATH.exists():
+    def __init__(self, version: str = "v1") -> None:
+        index_path, meta_path, model_name = _paths_for(version)
+        if not index_path.exists() or not meta_path.exists():
             raise FileNotFoundError(
-                "Index not found. Run `python -m rac.ingest` first."
+                f"Index for {version} not found. Run "
+                f"`python -m rag.ingest --version {version}` first."
             )
-        self.index = faiss.read_index(str(config.FAISS_INDEX_PATH))
-        with config.META_PATH.open("r", encoding="utf-8") as f:
+        self.version = version
+        self.model_name = model_name
+        self.index = faiss.read_index(str(index_path))
+        with meta_path.open("r", encoding="utf-8") as f:
             self.faqs: list[dict] = json.load(f)
-        self.model = SentenceTransformer(config.EMBEDDING_MODEL)
+        self.model = SentenceTransformer(model_name)
 
     def search(self, query: str, top_k: int = config.TOP_K) -> list[RetrievedFAQ]:
         emb = self.model.encode(
@@ -51,6 +71,17 @@ class Retriever:
                 )
             )
         return results
+
+
+# ---- one cached retriever per version --------------------------------------
+
+_retriever_cache: dict[str, Retriever] = {}
+
+
+def _get_retriever(version: str = "v1") -> Retriever:
+    if version not in _retriever_cache:
+        _retriever_cache[version] = Retriever(version)
+    return _retriever_cache[version]
 
 
 def _rephrase_with_openai(query: str, hits: list[RetrievedFAQ]) -> str | None:
@@ -83,12 +114,12 @@ def _rephrase_with_openai(query: str, hits: list[RetrievedFAQ]) -> str | None:
             temperature=0.2,
         )
         return resp.choices[0].message.content
-    except Exception as exc:  # network/auth/etc
+    except Exception as exc:
         return f"(OpenAI rephrase failed: {exc})"
 
 
-def answer(query: str, top_k: int = config.TOP_K) -> dict:
-    retriever = _get_retriever()
+def answer(query: str, top_k: int = config.TOP_K, version: str = "v1") -> dict:
+    retriever = _get_retriever(version)
     hits = retriever.search(query, top_k=top_k)
     if not hits or hits[0].score < config.MIN_SCORE:
         return {
@@ -98,6 +129,8 @@ def answer(query: str, top_k: int = config.TOP_K) -> dict:
             ),
             "sources": [h.__dict__ for h in hits],
             "used_llm": False,
+            "version": version,
+            "model": retriever.model_name,
         }
 
     rephrased = _rephrase_with_openai(query, hits)
@@ -106,19 +139,13 @@ def answer(query: str, top_k: int = config.TOP_K) -> dict:
             "answer": rephrased,
             "sources": [h.__dict__ for h in hits],
             "used_llm": True,
+            "version": version,
+            "model": retriever.model_name,
         }
     return {
         "answer": hits[0].answer,
         "sources": [h.__dict__ for h in hits],
         "used_llm": False,
+        "version": version,
+        "model": retriever.model_name,
     }
-
-
-_retriever_singleton: Retriever | None = None
-
-
-def _get_retriever() -> Retriever:
-    global _retriever_singleton
-    if _retriever_singleton is None:
-        _retriever_singleton = Retriever()
-    return _retriever_singleton

@@ -17,7 +17,7 @@ import requests
 from bs4 import BeautifulSoup
 from tqdm import tqdm
 
-from rac import config
+from rag import config
 
 ARTICLE_RE = re.compile(r"/en-US/Topic/article/KA-\d+", re.IGNORECASE)
 CATEGORY_RE = re.compile(r"/en-US/Topic/\d+", re.IGNORECASE)
@@ -144,7 +144,7 @@ def main() -> None:
         json.dump(merged, f, ensure_ascii=False, indent=2)
 
     print(f"Added {len(merged) - len(existing)} new FAQs (total: {len(merged)}) -> {args.output}")
-    print("Next: run `python -m rac.ingest` to rebuild the index.")
+    print("Next: run `python -m rag.ingest` to rebuild the index.")
 
 
 if __name__ == "__main__":
